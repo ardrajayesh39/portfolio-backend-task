@@ -1,5 +1,7 @@
-<<<<<<< HEAD
+HEAD
+
 # portfolio-frontend-task
-=======
+
 # portfolio
->>>>>>> Initial commit
+
+Initial commit

@@ -5,6 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
 import com.backend.portfolio.service.ProjectService;
 import com.backend.portfolio.model.Project;
 import java.util.List;
@@ -21,6 +26,7 @@ public class ProjectController {
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
+    @CrossOrigin(origins = "http://localhost:3000") 
 
     // Method to get all projects
     @GetMapping
@@ -49,4 +55,6 @@ public class ProjectController {
         projectService.deleteProject(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    
 }
