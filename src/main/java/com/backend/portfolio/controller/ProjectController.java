@@ -26,7 +26,10 @@ public class ProjectController {
     public ProjectController(ProjectService projectService) {
         this.projectService = projectService;
     }
+
     @CrossOrigin(origins = "http://localhost:3000") 
+
+
 
     // Method to get all projects
     @GetMapping

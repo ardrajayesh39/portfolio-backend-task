@@ -3,3 +3,4 @@
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/model/Project.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/repository/ProjectRepository.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/service/ProjectService.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/config/WebConfig.java
