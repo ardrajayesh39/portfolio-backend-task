@@ -1,6 +1,14 @@
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/PortfolioApplication.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/controller/EducationController.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/controller/ProjectController.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/controller/SkillController.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/model/Education.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/model/Project.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/model/Skill.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/repository/EducationRepository.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/repository/ProjectRepository.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/repository/SkillRepository.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/service/EducationService.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/service/ProjectService.java
+/home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/backend/portfolio/service/SkillService.java
 /home/ardrajayesh/PORTFOLIO/backend/src/main/java/com/config/WebConfig.java

@@ -1,25 +1,41 @@
 package com.backend.portfolio.model;
 
 import jakarta.persistence.*;
+import java.util.Arrays;
+import java.util.UUID;
 
 @Entity
 @Table(name = "project")
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Unique ID for the project
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+    
+    private String title;
+    private String description;
 
-    private String title;       // Project title
-    private String description; // Project description
-    private String link;        // Link to the project (could be GitHub, website, etc.)
+    @Lob
+    @Column(name = "image", columnDefinition = "BYTEA")
+    private byte[] image;  // Store image as byte array
+
+    // Default constructor (necessary for JPA)
+    public Project() {}
+
+    // Constructor to create a project with title, description, and image
+    public Project(String title, String description, byte[] image) {
+        this.title = title;
+        this.description = description;
+        this.image = image;
+    }
 
     // Getters and Setters
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -39,11 +55,17 @@ public class Project {
         this.description = description;
     }
 
-    public String getLink() {
-        return link;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setLink(String link) {
-        this.link = link;
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    // Optional: Override toString() method for better logging
+    @Override
+    public String toString() {
+        return "Project{id=" + id + ", title='" + title + "', description='" + description + "'}";
     }
 }

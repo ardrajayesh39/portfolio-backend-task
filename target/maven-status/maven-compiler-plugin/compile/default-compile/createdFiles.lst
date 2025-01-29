@@ -1,6 +1,14 @@
 com/backend/portfolio/controller/ProjectController.class
+com/backend/portfolio/repository/SkillRepository.class
+com/backend/portfolio/repository/ProjectRepository.class
+com/backend/portfolio/model/Education.class
+com/backend/portfolio/controller/EducationController.class
+com/backend/portfolio/repository/EducationRepository.class
+com/backend/portfolio/model/Skill.class
 com/backend/portfolio/PortfolioApplication.class
 com/java/config/WebConfig.class
-com/backend/portfolio/repository/ProjectRepository.class
+com/backend/portfolio/controller/SkillController.class
 com/backend/portfolio/service/ProjectService.class
 com/backend/portfolio/model/Project.class
+com/backend/portfolio/service/EducationService.class
+com/backend/portfolio/service/SkillService.class
