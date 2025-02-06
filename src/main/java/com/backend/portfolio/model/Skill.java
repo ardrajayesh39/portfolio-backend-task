@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "skill")
+@Table(name = "skill_new")
 public class Skill {
 
     @Id
@@ -14,13 +14,14 @@ public class Skill {
     
     private String name;
     
-    private String icon; // Added icon field
+    @Lob
+    @Column(columnDefinition = "BYTEA") // PostgreSQL specific, change if needed for other DBs
+    private byte[] icon; // Store icon as byte array
 
-    // Default constructor (necessary for JPA)
+    // Default constructor
     public Skill() {}
 
-    // Constructor to create a skill with name and icon
-    public Skill(String name, String icon) {
+    public Skill(String name, byte[] icon) {
         this.name = name;
         this.icon = icon;
     }
@@ -42,17 +43,16 @@ public class Skill {
         this.name = name;
     }
 
-    public String getIcon() {
-        return icon; // Getter for icon
+    public byte[] getIcon() {
+        return icon;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon; // Setter for icon
+    public void setIcon(byte[] icon) {
+        this.icon = icon;
     }
 
-    // Optional: Override toString() method for better logging
     @Override
     public String toString() {
-        return "Skill{id=" + id + ", name='" + name + "', icon='" + icon + "'}";
+        return "Skill{id=" + id + ", name='" + name + "', icon= [binary data]}";
     }
 }

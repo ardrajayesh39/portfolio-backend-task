@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,47 +42,58 @@ public class SkillController {
     @GetMapping("/{id}")
     public ResponseEntity<Skill> getSkillById(@PathVariable UUID id) {
         Optional<Skill> skill = skillService.getSkillById(id);
-        if (skill.isPresent()) {
-            return new ResponseEntity<>(skill.get(), HttpStatus.OK);
-        } else {
-            logger.warn("Skill with ID {} not found.", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return skill.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> {
+                    logger.warn("Skill with ID {} not found.", id);
+                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                });
     }
 
-    // Create a new skill
-    @PostMapping
+    // Create a new skill with image upload
+    @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<Skill> createSkill(@RequestParam("name") String name,
-                                             @RequestParam("icon") String icon) {
-        if (name == null || name.isEmpty() || icon == null || icon.isEmpty()) {
-            logger.error("Skill creation failed. Name and icon are required.");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // Return 400 Bad Request if params are missing
+                                             @RequestParam("icon") MultipartFile iconFile) {
+        try {
+            if (name == null || name.isEmpty() || iconFile.isEmpty()) {
+                logger.error("Skill creation failed. Name and icon are required.");
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            byte[] iconData = iconFile.getBytes();
+            Skill skill = new Skill(name, iconData);
+            Skill createdSkill = skillService.createSkill(skill);
+
+            logger.info("Skill created with ID {}", createdSkill.getId());
+            return new ResponseEntity<>(createdSkill, HttpStatus.CREATED);
+        } catch (IOException e) {
+            logger.error("Error processing icon file.", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        Skill skill = new Skill(name, icon);
-        Skill createdSkill = skillService.createSkill(skill);
-
-        logger.info("Skill created with ID {}", createdSkill.getId());
-        return new ResponseEntity<>(createdSkill, HttpStatus.CREATED);
     }
 
     // Update an existing skill
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
     public ResponseEntity<Skill> updateSkill(@PathVariable UUID id,
                                              @RequestParam("name") String name,
-                                             @RequestParam("icon") String icon) {
-        if (name == null || name.isEmpty() || icon == null || icon.isEmpty()) {
-            logger.error("Skill update failed. Name and icon are required.");
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);  // Return 400 Bad Request if params are missing
-        }
+                                             @RequestParam("icon") MultipartFile iconFile) {
+        try {
+            if (name == null || name.isEmpty() || iconFile.isEmpty()) {
+                logger.error("Skill update failed. Name and icon are required.");
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 
-        Skill updatedSkill = skillService.updateSkill(id, name, icon);
+            byte[] iconData = iconFile.getBytes();
+            Skill updatedSkill = skillService.updateSkill(id, name, iconData);
 
-        if (updatedSkill != null) {
-            return new ResponseEntity<>(updatedSkill, HttpStatus.OK);
-        } else {
-            logger.warn("Skill with ID {} not found for update.", id);
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            if (updatedSkill != null) {
+                return new ResponseEntity<>(updatedSkill, HttpStatus.OK);
+            } else {
+                logger.warn("Skill with ID {} not found for update.", id);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (IOException e) {
+            logger.error("Error processing icon file.", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

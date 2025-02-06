@@ -24,7 +24,7 @@ public class SkillService {
     }
 
     public Optional<Skill> getSkillById(UUID id) {
-        return skillRepository.findById(id); // Use UUID here
+        return skillRepository.findById(id);
     }
 
     // Create a new skill
@@ -32,16 +32,16 @@ public class SkillService {
         return skillRepository.save(skill);
     }
 
-    // Update an existing skill (including name and icon)
-    public Skill updateSkill(UUID id, String name, String icon) {
+    // Update an existing skill
+    public Skill updateSkill(UUID id, String name, byte[] icon) {
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isPresent()) {
             Skill existingSkill = optionalSkill.get();
-            existingSkill.setName(name);  // Update skill name
-            existingSkill.setIcon(icon);  // Update skill icon
+            existingSkill.setName(name);
+            existingSkill.setIcon(icon);
             return skillRepository.save(existingSkill);
         } else {
-            return null; // Skill not found
+            return null;
         }
     }
 
